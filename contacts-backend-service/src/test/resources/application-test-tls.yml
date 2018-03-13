@@ -1,0 +1,20 @@
+server:
+  ssl:
+    enabled: true
+    enabled-protocols: "TLSv1.2"
+    key-store: "@tls.hostKeystore@"
+    key-store-password: "@tls.password@"
+    key-password: "@tls.password@"
+    key-alias: "localhost"
+    client-auth: need
+    trust-store: "@tls.truststore@"
+    trust-store-password: "@tls.password@"
+
+client:
+  ssl:
+    key-store: "@tls.clientKeystore@"
+    key-store-password: "@tls.password@"
+    key-password: "@tls.password@"
+    key-alias: "client"
+    trust-store: "@tls.truststore@"
+    trust-store-password: "@tls.password@"

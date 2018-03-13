@@ -1,0 +1,18 @@
+apply plugin: 'base'
+
+task generateCerts(type: Exec) {
+    doFirst {
+        tlsCertsDir.mkdirs()
+    }
+
+    environment = [
+        CERTS_DIR      : tlsCertsDir.path,
+        PASSWORD       : tlsPassword,
+        HOST_KEYSTORE  : tlsHostKeystore.path,
+        CLIENT_KEYSTORE: tlsClientKeystore.path,
+        TRUSTSTORE     : tlsTruststore.path
+    ]
+    commandLine './generate_certs.sh'
+}
+
+assemble.dependsOn generateCerts

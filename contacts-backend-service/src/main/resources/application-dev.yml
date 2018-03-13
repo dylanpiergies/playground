@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+spring:
+    datasource:
+        driverClassName: org.h2.Driver
+        url: "jdbc:h2:@project.buildDir@/db/dev-db;INIT=CREATE SCHEMA IF NOT EXISTS \"@db.schemaName@\"\\;SET SCHEMA \"@db.schemaName@\""
+
+    h2:
+        console:
+            enabled: true
+
+    jooq:
+        sql-dialect: H2
+
+management:
+    security:
+        enabled: false
+
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: debug

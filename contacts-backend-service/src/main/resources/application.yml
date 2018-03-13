@@ -1,0 +1,16 @@
+endpoints:
+    enabled: true
+
+cxf:
+    path: /api
+    jaxrs:
+        component-scan: true
+
+flyway:
+    enabled: true
+    schemas:
+        - @db.schemaName@
+
+security:
+  basic:
+    enabled: false

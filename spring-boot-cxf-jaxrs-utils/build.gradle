@@ -1,0 +1,10 @@
+apply plugin: 'java'
+
+dependencies {
+    compile 'org.springframework:spring-beans'
+    compile 'org.springframework:spring-context'
+    compile 'com.fasterxml.jackson.core:jackson-databind'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+    compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider'
+    compile 'org.apache.cxf:cxf-spring-boot-starter-jaxrs'
+}

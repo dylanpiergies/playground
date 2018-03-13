@@ -1,0 +1,10 @@
+rootProject.name = 'contacts'
+
+include ':common-model'
+include ':common-spring-config-jaxrs'
+include ':common-spring-config-jooq'
+include ':contacts-api'
+include ':contacts-backend-service'
+include ':contacts-frontend-service'
+include ':spring-boot-cxf-jaxrs-utils'
+include ':tls-test-certs'

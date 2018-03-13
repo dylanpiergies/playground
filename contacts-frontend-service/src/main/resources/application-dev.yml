@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+contacts:
+    backend:
+        baseUrl: "http://localhost:8081/api"
+
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: debug

@@ -1,0 +1,6 @@
+dependencies {
+    compile project(':common-model')
+    compile 'org.apache.cxf:cxf-spring-boot-starter-jaxrs'
+    compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+}

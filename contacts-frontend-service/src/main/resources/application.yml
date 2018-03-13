@@ -1,0 +1,11 @@
+endpoints:
+    enabled: true
+
+cxf:
+    path: /api
+    jaxrs:
+        component-scan: true
+
+security:
+  basic:
+    enabled: false
