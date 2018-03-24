@@ -1,4 +1,4 @@
-rootProject.name = 'contacts'
+rootProject.name = 'playground'
 
 include ':common-model'
 include ':common-spring-config-jaxrs'
