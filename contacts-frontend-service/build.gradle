@@ -2,8 +2,4 @@ dependencies {
     compile project(':contacts-api')
 }
 
-dockerCompose {
-    startedServices = ['contacts-backend-service']
-}
-
 dockerCompose.isRequiredBy(test)

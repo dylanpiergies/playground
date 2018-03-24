@@ -72,7 +72,7 @@ allprojects {
         options.encoding = 'UTF-8'
     }
 
-    def composeFiles = ["$rootDir/docker-compose-dev.yml"]
+    def composeFiles = ["$rootDir/docker-compose.yml"]
 
     dockerCompose {
         useComposeFiles = composeFiles
@@ -92,13 +92,12 @@ Set<Project> frontendServiceProjects = [
 ]
 
 // Add backend service projects to this list. They will be configured with database access capabilities.
-Set<Project> backendServiceProjects = [
+Set<Project> jooqProjects = [
     project(':contacts-backend-service')
 ]
 
 // Add all Java projects to this list. Common configuration will be applied to them.
-Set<Project> javaProjects = apiProjects + frontendServiceProjects + backendServiceProjects + [
-    project(':common-model'),
+Set<Project> javaProjects = apiProjects + frontendServiceProjects + jooqProjects + [
     project(':common-spring-config-jaxrs'),
     project(':common-spring-config-jooq'),
     project(':spring-boot-cxf-jaxrs-utils')
@@ -115,13 +114,11 @@ configure(apiProjects) {
     dependencies {
         compile 'javax.ws.rs:javax.ws.rs-api'
         compile 'javax.validation:validation-api'
-
-        compile project(':common-model')
     }
 }
 
 // Common configuration for service projects
-configure(frontendServiceProjects + backendServiceProjects) {
+configure(frontendServiceProjects + jooqProjects) {
     apply plugin: 'org.springframework.boot'
 
     dependencies {
@@ -133,7 +130,6 @@ configure(frontendServiceProjects + backendServiceProjects) {
         compile 'org.springframework.boot:spring-boot-starter-actuator'
         compile 'org.springframework.boot:spring-boot-starter-validation'
         compile 'org.springframework.boot:spring-boot-starter-security'
-        compile 'org.flywaydb:flyway-core'
 
         compile project(':spring-boot-cxf-jaxrs-utils')
 
@@ -167,12 +163,13 @@ configure(frontendServiceProjects + backendServiceProjects) {
 }
 
 // Common configuration for database accessing projects
-configure(backendServiceProjects) {
+configure(jooqProjects) {
     apply plugin: 'org.flywaydb.flyway'
     apply plugin: 'nu.studer.jooq'
 
     dependencies {
         compile project(':common-spring-config-jooq')
+        compile 'org.flywaydb:flyway-core'
 
         runtime 'org.postgresql:postgresql'
         runtime 'com.h2database:h2'

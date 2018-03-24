@@ -1,7 +1,10 @@
-FROM openjdk
+FROM openjdk:8
 RUN apt-get update \
     && apt-get install -y --no-install-recommends jq \
     && rm -rf /var/lib/apt/lists/*
+ARG server_port=8080
+EXPOSE $server_port
+ENV SERVER_PORT=$server_port
+HEALTHCHECK --interval=1s --timeout=1s --start-period=10s CMD bash -c '[[ "$(curl http://localhost:$SERVER_PORT/health | jq -r .status)" == "UP" ]]'
+CMD ["java", "-jar", "/opt/contacts-frontend-service.jar"]
 COPY build/libs/contacts-frontend-service.jar /opt
-CMD ["java", "-jar", "/opt/contacts-frontend-service.jar", "--spring.profiles.active=dev"]
-HEALTHCHECK --interval=1s --timeout=1s --start-period=10s CMD bash -c '[[ "$(curl http://localhost:8080/health | jq -r .status)" == "UP" ]]'

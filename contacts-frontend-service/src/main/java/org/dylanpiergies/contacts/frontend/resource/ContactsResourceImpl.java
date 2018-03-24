@@ -53,6 +53,12 @@ public class ContactsResourceImpl implements ContactsResource {
         contactsBackendResource.updateContact(contact);
     }
 
+    @Override
+    public void deleteContact(int id) {
+        ContactsResource contactsBackendResource = createContactsBackendResource();
+        contactsBackendResource.deleteContact(id);
+    }
+
     private ContactsResource createContactsBackendResource() {
         return proxyClientFactory.createProxyClient(contactsBackendBaseUrl, ContactsResource.class);
     }
