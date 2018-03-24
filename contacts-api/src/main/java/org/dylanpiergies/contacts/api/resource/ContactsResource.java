@@ -24,4 +24,8 @@ public interface ContactsResource {
 
     @PUT
     void updateContact(@NotNull Contact contact);
+
+    @DELETE
+    @Path("/{id}")
+    void deleteContact(@PathParam("id") int id);
 }

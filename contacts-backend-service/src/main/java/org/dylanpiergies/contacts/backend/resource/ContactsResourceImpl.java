@@ -118,4 +118,9 @@ public class ContactsResourceImpl implements ContactsResource {
     public void updateContact(Contact contact) {
         throw new WebApplicationException(Response.Status.METHOD_NOT_ALLOWED);
     }
+
+    @Override
+    public void deleteContact(int contactId) {
+        throw new WebApplicationException(Response.Status.METHOD_NOT_ALLOWED);
+    }
 }
