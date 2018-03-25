@@ -8,9 +8,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE'
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
         classpath 'nu.studer:gradle-jooq-plugin:2.0.7'
-        classpath 'gradle.plugin.com.boxfuse.client:flyway-release:4.2.0'
+        classpath "gradle.plugin.com.boxfuse.client:flyway-release:$flywayVersion"
         classpath 'com.avast.gradle:gradle-docker-compose-plugin:0.6.2'
     }
 }
@@ -43,19 +43,18 @@ allprojects {
 
     dependencyManagement {
         imports {
-            mavenBom 'org.springframework.boot:spring-boot-dependencies:1.5.7.RELEASE'
+            mavenBom "org.springframework.boot:spring-boot-dependencies:$springBootVersion"
         }
 
         dependencies {
-            dependency 'com.h2database:h2:1.4.196'
-            dependency 'com.shazam:shazamcrest:0.11'
-            dependency 'javax.ws.rs:javax.ws.rs-api:2.1'
-            dependency 'org.apache.commons:commons-lang3:3.7'
-            dependency 'org.apache.cxf:cxf-spring-boot-starter-jaxrs:3.2.0'
-            dependency 'org.fluttercode.datafactory:datafactory:0.8'
-            dependency 'org.flywaydb:flyway-core:4.2.0'
-            dependency 'org.postgresql:postgresql:42.1.4'
-
+            dependency "com.h2database:h2:$h2DatabaseVersion"
+            dependency "com.shazam:shazamcrest:$shazamcrestVersion"
+            dependency "javax.ws.rs:javax.ws.rs-api:$jaxRsApiVersion"
+            dependency "org.apache.commons:commons-lang3:$apacheCommonsLangVersion"
+            dependency "org.apache.cxf:cxf-spring-boot-starter-jaxrs:$apacheCxfVersion"
+            dependency "org.fluttercode.datafactory:datafactory:$datafactoryVersion"
+            dependency "org.flywaydb:flyway-core:$flywayVersion"
+            dependency "org.postgresql:postgresql:$postgresqlVersion"
         }
     }
 
@@ -126,10 +125,8 @@ configure(frontendServiceProjects + jooqProjects) {
 
         compile 'org.springframework.boot:spring-boot-starter'
         compile 'org.springframework.boot:spring-boot-starter-web'
-//        compile 'org.springframework.boot:spring-boot-starter-jetty'
         compile 'org.springframework.boot:spring-boot-starter-actuator'
         compile 'org.springframework.boot:spring-boot-starter-validation'
-        compile 'org.springframework.boot:spring-boot-starter-security'
 
         compile project(':spring-boot-cxf-jaxrs-utils')
 
