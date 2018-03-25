@@ -71,7 +71,7 @@ allprojects {
         options.encoding = 'UTF-8'
     }
 
-    def composeFiles = ["$rootDir/docker-compose.yml"]
+    def composeFiles = ["$rootDir/docker-compose-dev.yml"]
 
     dockerCompose {
         useComposeFiles = composeFiles
