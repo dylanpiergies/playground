@@ -19,12 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ContactsRepository {
+public class ContactsPersistenceService {
 
     private final DSLContext dsl;
 
     @Autowired
-    public ContactsRepository(final DSLContext dsl) {
+    public ContactsPersistenceService(final DSLContext dsl) {
         this.dsl = dsl;
     }
 

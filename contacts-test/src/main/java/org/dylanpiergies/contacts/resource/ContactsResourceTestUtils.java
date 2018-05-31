@@ -21,12 +21,14 @@ public class ContactsResourceTestUtils {
             contacts.add(DataFactoryUtils.createContact());
         }
         final Set<Integer> createdIds = new HashSet<>();
-        contacts.forEach(contact -> {
+        contacts.parallelStream().forEach(contact -> {
             contactsResource.createContact(contact);
             final int id = Integer
                     .valueOf(WebClient.client(contactsResource).getResponse().getHeaderString("Location"));
             contact.setId(id);
-            createdIds.add(id);
+            synchronized (createdIds) {
+                createdIds.add(id);
+            }
         });
 
         final List<Contact> retrievedContacts = contactsResource.getContacts()

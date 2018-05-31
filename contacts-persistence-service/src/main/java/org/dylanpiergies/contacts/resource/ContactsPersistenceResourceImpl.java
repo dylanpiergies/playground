@@ -9,7 +9,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 import org.dylanpiergies.contacts.model.Contact;
-import org.dylanpiergies.contacts.persistence.ContactsRepository;
+import org.dylanpiergies.contacts.persistence.ContactsPersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,21 +20,21 @@ public class ContactsPersistenceResourceImpl implements ContactsResource {
     private HttpServletResponse response;
 
     @Autowired
-    private ContactsRepository contactsRepository;
+    private ContactsPersistenceService contactsPersistenceService;
 
     @Override
     public Contact getContact(final int id) {
-        return contactsRepository.getContactById(id).orElseThrow(NotFoundException::new);
+        return contactsPersistenceService.getContactById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
     public List<Contact> getContacts() {
-        return contactsRepository.getAll();
+        return contactsPersistenceService.getAll();
     }
 
     @Override
     public void createContact(final Contact contact) {
-        final int id = contactsRepository.createContact(contact);
+        final int id = contactsPersistenceService.createContact(contact);
         response.setHeader("Location", Integer.toString(id));
         response.setStatus(Response.Status.CREATED.getStatusCode());
     }
