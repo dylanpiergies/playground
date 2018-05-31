@@ -1,0 +1,8 @@
+cxf:
+    path: /api
+    jaxrs:
+        component-scan: true
+
+flyway:
+    schemas:
+        - @db.schemaName@

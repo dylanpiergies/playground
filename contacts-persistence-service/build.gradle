@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':contacts-api')
+    
+    testCompile project(':contacts-test')
+}

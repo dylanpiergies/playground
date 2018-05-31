@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+spring:
+    datasource:
+        driverClassName: org.h2.Driver
+        url: "jdbc:h2:@project.buildDir@/db/dev-db"
+
+    h2:
+        console:
+            enabled: true
+
+    jooq:
+        sql-dialect: H2
+
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: debug

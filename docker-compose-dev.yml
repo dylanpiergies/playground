@@ -7,22 +7,22 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
 
-  contacts-frontend-service:
+  contacts-caching-service:
     build:
-      context: ./contacts-frontend-service
+      context: ./contacts-caching-service
       args:
         server_port: 8080
     network_mode: host
     depends_on:
-      - contacts-backend-service
-    command: java -jar /opt/contacts-frontend-service.jar --spring.profiles.active=dev
+      - contacts-persistence-service
+    command: java -jar /opt/contacts-caching-service.jar --spring.profiles.active=dev
 
-  contacts-backend-service:
+  contacts-persistence-service:
     build:
-      context: ./contacts-backend-service
+      context: ./contacts-persistence-service
       args:
         server_port: 8081
     network_mode: host
     depends_on:
       - postgres
-    command: java -jar /opt/contacts-backend-service.jar --spring.profiles.active=dev,postgres-dev
+    command: java -jar /opt/contacts-persistence-service.jar --spring.profiles.active=dev,postgres-dev

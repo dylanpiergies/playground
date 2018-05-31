@@ -1,0 +1,3 @@
+contacts:
+    persistence-service:
+        baseUrl: "http://contacts-persistence-service:8080/api"

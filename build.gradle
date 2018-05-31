@@ -87,19 +87,23 @@ Set<Project> apiProjects = [
 
 // Add frontend service projects to this list. Common configuration will be applied to them.
 Set<Project> frontendServiceProjects = [
-    project(':contacts-frontend-service')
+    project(':contacts-caching-service')
 ]
 
-// Add backend service projects to this list. They will be configured with database access capabilities.
+// Add persistence service projects to this list. They will be configured with database access capabilities.
 Set<Project> jooqProjects = [
-    project(':contacts-backend-service')
+    project(':contacts-persistence-service')
+]
+
+// Add integration test projects to this list. Common configuration will be applied to them.
+Set<Project> testProjects = [
+	project(':contacts-test')
 ]
 
 // Add all Java projects to this list. Common configuration will be applied to them.
-Set<Project> javaProjects = apiProjects + frontendServiceProjects + jooqProjects + [
-    project(':common-spring-config-jaxrs'),
-    project(':common-spring-config-jooq'),
-    project(':spring-boot-cxf-jaxrs-utils')
+Set<Project> javaProjects = apiProjects + frontendServiceProjects + jooqProjects + testProjects + [
+    project(':common-jaxrs'),
+    project(':common-jooq')
 ]
 
 // Common configuration for all Java projects
@@ -121,20 +125,17 @@ configure(frontendServiceProjects + jooqProjects) {
     apply plugin: 'org.springframework.boot'
 
     dependencies {
-        compile project(':common-spring-config-jaxrs')
+        compile project(':common-jaxrs')
 
         compile 'org.springframework.boot:spring-boot-starter'
         compile 'org.springframework.boot:spring-boot-starter-web'
         compile 'org.springframework.boot:spring-boot-starter-actuator'
         compile 'org.springframework.boot:spring-boot-starter-validation'
 
-        compile project(':spring-boot-cxf-jaxrs-utils')
-
         compile 'org.springframework.boot:spring-boot-devtools'
 
         testCompile 'org.springframework.boot:spring-boot-starter-test'
         testCompile 'com.shazam:shazamcrest'
-        testCompile 'org.fluttercode.datafactory:datafactory'
     }
 
     bootRun {
@@ -165,7 +166,7 @@ configure(jooqProjects) {
     apply plugin: 'nu.studer.jooq'
 
     dependencies {
-        compile project(':common-spring-config-jooq')
+        compile project(':common-jooq')
         compile 'org.flywaydb:flyway-core'
 
         runtime 'org.postgresql:postgresql'
@@ -175,7 +176,7 @@ configure(jooqProjects) {
         jooqRuntime 'com.h2database:h2'
     }
 
-    def schemaName = project.name.replace('-backend-service', '')
+    def schemaName = project.name.replace('-persistence-service', '')
     def codegenDatabaseUrl = "jdbc:h2:$buildDir/db/codegen-db;INIT=CREATE SCHEMA IF NOT EXISTS \"$schemaName\"\\;SET SCHEMA \"$schemaName\""
 
     flyway {
@@ -197,7 +198,7 @@ configure(jooqProjects) {
                     inputSchema = schemaName
                 }
                 target {
-                    packageName = "org.dylanpiergies.${project.name.replace('-service', '').replace('-', '.')}.db"
+                    packageName = "org.dylanpiergies.${project.name.replace('-service', '').replace('-', '.')}.jooq"
                 }
             }
         }
@@ -209,5 +210,15 @@ configure(jooqProjects) {
         filter ReplaceTokens, tokens: [
             "db.schemaName": schemaName
         ]
+    }
+}
+
+configure(testProjects) {
+    dependencies {
+    	compile project(':common-jaxrs')
+    	
+    	compile 'org.springframework.boot:spring-boot-starter-test'
+        compile 'com.shazam:shazamcrest'
+        compile 'org.fluttercode.datafactory:datafactory'
     }
 }

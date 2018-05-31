@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  contacts-caching-service:
+    build: ./contacts-caching-service
+    command: '--spring.profiles.active=docker-compose'
+    ports:
+      - 8080
+    depends_on:
+      - contacts-persistence-service
+
+  contacts-persistence-service:
+    build: ./contacts-persistence-service
+    command: '--spring.profiles.active=docker-compose'
+    depends_on:
+      - postgres
